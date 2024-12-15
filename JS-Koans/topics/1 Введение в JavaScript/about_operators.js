@@ -1,63 +1,63 @@
-
 describe("About Operators (about_operators.js)", function() {
-  it("addition", function() {
-    let result = 0;
-    //starting i at 0, add i to result and increment i by 1 until i is equal to 5
-    for (let i = 0; i <= 5; i++) {
-      result = result + i;
-    }
-    // What is the value of result?
-    expect(FILL_ME_IN).toBe(result);
-  });
 
-  it("assignment addition", function() {
-    let result = 0;
-    for (let i = 0; i <= 5; i++) {
-      //the code below is just like saying result = result + i; but is more concise
-      result += i;
-    }
-    // What is the value of result?
-    expect(FILL_ME_IN).toBe(result);
-  });
+    it("addition", function() {
+        let result = 0;
+        // начинаем с i = 0, добавляем i к result и увеличиваем i на 1 до тех пор, пока i не станет равным 5
+        for (let i = 0; i <= 5; i++) {
+            result = result + i;
+        }
+        // Каково значение result?
+        expect(15).toBe(result);
+    });
 
-  it("subtraction", function() {
-    let result = 5;
-    for (let i = 0; i <= 2; i++) {
-      result = result - i;
-    }
-    // What is the value of result?
-    expect(FILL_ME_IN).toBe(result);
-  });
+    it("assignment addition", function() {
+        let result = 0;
+        for (let i = 0; i <= 5; i++) {
+            // код ниже эквивалентен result = result + i;, но более краткий
+            result += i;
+        }
+        // Оператор += делает то же самое, что и result = result + i;. Сумма чисел от 0 до 5 равна 15.
+        expect(15).toBe(result);
+    });
 
-  it("assignment subtraction", function() {
-    let result = 5;
-    for (let i = 0; i <= 2; i++) {
-      result -= i;
-    }
-    // What is the value of result?
-    expect(FILL_ME_IN).toBe(result);
-  });
+    it("subtraction", function() {
+        let result = 5;
+        for (let i = 0; i <= 2; i++) {
+            result = result - i;
+        }
+        // Начальное значение result = 5
+        expect(2).toBe(result);
+    });
 
-  //Assignment operators are available for multiplication and division as well
-  //let's do one more, the modulo operator, used for showing division remainder
+    it("assignment subtraction", function() {
+        let result = 5;
+        for (let i = 0; i <= 2; i++) {
+            result -= i;
+        }
+        // Оператор -= эквивалентен result = result - i;. Итоговое значение result = 2
+        expect(2).toBe(result);
+    });
 
-  it("modulus", function() {
-    let result = 10;
-    let x = 5;
-    //again this is exactly the same as result = result % x
-    result %= x;
-    // What is the value of result?
-    expect(FILL_ME_IN).toBe(result);
-  });
+    // Оператор присваивания доступен для умножения и деления, а также модульного деления
+    // давайте сделаем ещё один, оператор остатка от деления, используемый для получения остатка от деления
 
-  it("typeof", function() {
-    // what is the type of an empty object?
-    expect(FILL_ME_IN).toBe(typeof({}));
-    // what is the type of a string?
-    expect(FILL_ME_IN).toBe(typeof('apple'));
-    // what is the type of -5?
-    expect(FILL_ME_IN).toBe(typeof(-5));
-    // what is the type of false?
-    expect(FILL_ME_IN).toBe(typeof(false));
-  });
+    it("modulus", function() {
+        let result = 10;
+        let x = 5;
+        // снова, это точно то же самое, что result = result % x
+        result %= x;
+        // Пояснение: Оператор %= выполняет операцию остатка от деления
+        expect(0).toBe(result);
+    });
+
+    it("typeof", function() {
+        // typeof({}) возвращает "object"
+        expect("object").toBe(typeof({}));
+        // typeof('apple') возвращает "string"
+        expect("string").toBe(typeof('apple'));
+        // typeof(-5) возвращает "number"
+        expect("number").toBe(typeof(-5));
+        // typeof(false) возвращает "boolean"
+        expect("boolean").toBe(typeof(false));
+    });
 });
