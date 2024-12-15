@@ -1,40 +1,38 @@
 describe("About Asserts (about_asserts.js)", function() {
-  // We shall contemplate truth by testing reality, via spec expectations.
-  it('should expect true', function() {
-    // Your journey begins here: Replace the word false with true 
-    expect(FILL_ME_IN).toBe(true);
-  });
+    // Мы будем размышлять о правде, тестируя реальность через ожидания спецификаций.
+    it('should expect true', function() {
+        // Ваше путешествие начинается здесь: Замените слово false на true 
+        expect(true).toBe(true);
+    });
 
-  // To understand reality, we must compare our expectations against reality.
-  it('should expect equality', function() {
-    let expectedValue = FILL_ME_IN;
-    let actualValue = 1 + 1;
+    // Чтобы понять реальность, мы должны сравнить наши ожидания с реальностью.
+    it('should expect equality', function() {
+        let expectedValue = 2;
+        let actualValue = 1 + 1;
 
-    expect(actualValue === expectedValue).toBeTruthy();
-  });
+        expect(actualValue === expectedValue).toBeTruthy();
+    });
 
-  // Some ways of asserting equality are better than others.
-  it('should assert equality a better way', function() {
-    let expectedValue = FILL_ME_IN;
-    let actualValue = 1 + 1;
+    // Некоторые способы утверждения равенства лучше других.
+    it('should assert equality a better way', function() {
+        let expectedValue = 2;
+        let actualValue = 1 + 1;
 
-  // toEqual() compares using common sense equality.
-    expect(actualValue).toEqual(expectedValue);
-  });
+        // toEqual() сравнивает используя здравый смысл равенства.
+        expect(actualValue).toEqual(expectedValue);
+    });
 
-  // Sometimes you need to be precise about what you "type."
-  it('should assert equality with ===', function() {
-    let expectedValue = FILL_ME_IN;
-    let actualValue = (1 + 1).toString();
+    // Иногда нужно быть точным в том, что вы "типизируете".
+    it('should assert equality with ===', function() {
+        let expectedValue = "2";
+        let actualValue = (1 + 1).toString();
 
-  // toBe() will always use === to compare.
-    expect(actualValue).toBe(expectedValue);
-  });
+        // toBe() всегда использует === для сравнения.
+        expect(actualValue).toBe(expectedValue);
+    });
 
-  // Sometimes we will ask you to fill in the values.
-  it('should have filled in values', function() {
-    expect(1 + 1).toEqual(FILL_ME_IN);
-  });
+    // Иногда мы будем просить вас заполнить значения.
+    it('should have filled in values', function() {
+        expect(1 + 1).toEqual(2);
+    });
 });
-
-
