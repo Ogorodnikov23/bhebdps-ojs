@@ -1,85 +1,76 @@
-describe("About Functions And Closure (about_functions_and_closure.js)", function() {
-  it("defining functions directly", function() {
-    let result = "a";
-    function changeResult() {
-      // the ability to access variables defined in the same scope as the function is known as 'closure'
-      result = "b";
-    };
-    changeResult();
-    // what is the value of result?
-    expect(FILL_ME_IN).toBe(result);
-  });
+describe("О функциях и замыканиях (about_functions_and_closure.js)", function() {
+    it("определение функций напрямую", function() {
+        let result = "a";
 
-  it("assigning functions to variables", function() {
-    let triple = function(input) {
-      return input * 3;
-    };
-    // what is triple 4?
-    expect(FILL_ME_IN).toBe(triple(4));
-  });
+        function changeResult() {
+            // Способность функции обращаться к переменным из той же области видимости называется 'замыканием'
+            result = "b";
+        };
+        changeResult();
+        // Значение переменной result после вызова changeResult() равно "b"
+        expect("b").toBe(result);
+    });
 
-  it("self invoking functions", function() {
-    let publicValue = "shared";
+    it("присваивание функций переменным", function() {
+        let triple = function(input) {
+            return input * 3;
+        };
+        // triple(4) возвращает 4 * 3 = 12
+        expect(12).toBe(triple(4));
+    });
 
-    // self invoking functions are used to provide scoping and to alias variables
-    (function(pv) {
-      let secretValue = "password";
-      // what is the value of pv?
-      expect(FILL_ME_IN).toBe(pv);
-      // is secretValue available in this context?
-      expect(FILL_ME_IN).toBe(typeof(secretValue));
-      // is publicValue available in this context?
-      expect(FILL_ME_IN).toBe(typeof(publicValue));
-    })(publicValue);
+    it("самовызывающиеся функции", function() {
+        let publicValue = "shared";
 
-    // is secretValue available in this context?
-    expect(FILL_ME_IN).toBe(typeof(secretValue));
-    // is publicValue available in this context?
-    expect(FILL_ME_IN).toBe(typeof(publicValue));
-  });
+        // Самовызывающиеся функции используются для создания локальной области видимости и передачи переменных
+        (function(pv) {
+            let secretValue = "password";
+            // pv передаётся как аргумент и равно "shared"
+            expect("shared").toBe(pv);
+            // secretValue определена внутри функции, её тип "string"
+            expect("string").toBe(typeof(secretValue));
+            // publicValue доступна внутри функции, её тип "string"
+            expect("string").toBe(typeof(publicValue));
+        })(publicValue);
 
-  it("arguments array", function() {
-    let add = function() {
-      let total = 0;
-      for(let i = 0; i < arguments.length; i++) {
-        // complete the implementation of this method so that it returns the sum of its arguments
-        // FILL_ME_IN
-      }
-      // FILL_ME_IN
-    };
+        // secretValue недоступна за пределами функции, её тип "undefined"
+        expect("undefined").toBe(typeof(secretValue));
+        // publicValue по-прежнему доступна, её тип "string"
+        expect("string").toBe(typeof(publicValue));
+    });
 
-    // add 1,2,3,4,5
-    expect(15).toBe(add(1,2,3,4,5));
-    // add 4,7,-2
-    expect(9).toBe(add(4,7,-2));
-  });
+    it("массив arguments", function() {
+        let add = function() {
+            let total = 0;
+            for (let i = 0; i < arguments.length; i++) {
+                total += arguments[i];
+            }
+            return total;
+        };
 
-  it("using call to invoke function",function(){
-    let invokee = function( message ){
-      return this + message;  
-    };
-    
-    //another way to invoke a function is to use the call function which allows 
-    //you to set the caller's "this" context.  Call can take any number of arguments: 
-    //the first one is always the context that this should be set to in the called
-    //function, and the arguments to be sent to the function, multiple arguments are separated by commas.
-    let result = invokee.call("I am this!", "Where did it come from?");
+        // add(1, 2, 3, 4, 5) возвращает 15
+        expect(15).toBe(add(1, 2, 3, 4, 5));
+        // add(4, 7, -2) возвращает 9
+        expect(9).toBe(add(4, 7, -2));
+    });
 
-    // what will the value of invokee's this be?
-    expect(FILL_ME_IN).toBe(result);
-  });
+    it("использование call для вызова функции", function() {
+        let invokee = function(message) {
+            return this + message;
+        };
 
-  it("using apply to invoke function",function(){
-    let invokee = function( message1, message2 ){
-      return this + message1 + message2;  
-    };
+        // invokee.call("I am this!", "Where did it come from?") возвращает "I am this!Where did it come from?"
+        let result = invokee.call("I am this!", "Where did it come from?");
+        expect("I am this!Where did it come from?").toBe(result);
+    });
 
-    //similar to the call function is the apply function.  Apply only has two
-    //arguments:  the first is the context that this should be set to in the called
-    //function and the second is the array of arguments to be passed into the called function.
-    let result = invokee.apply("I am this!", ["I am arg1","I am arg2"]);
+    it("использование apply для вызова функции", function() {
+        let invokee = function(message1, message2) {
+            return this + message1 + message2;
+        };
 
-    // what will the value of invokee's this be?
-    expect(FILL_ME_IN).toBe(result);
-  });
+        // invokee.apply("I am this!", ["I am arg1", "I am arg2"]) возвращает "I am this!I am arg1I am arg2"
+        let result = invokee.apply("I am this!", ["I am arg1", "I am arg2"]);
+        expect("I am this!I am arg1I am arg2").toBe(result);
+    });
 });
