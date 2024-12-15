@@ -1,49 +1,50 @@
 describe("About Reflection (about_reflection.js)", function() {
-  function A() {
-    this.aprop = "A";
-  };
-
-  function B() {
-    this.bprop = "B";
-  };
-
-  B.prototype = new A();
-
-  it("hasOwnProperty", function() {
-    let b = new B();
-
-    let keys = [];
-    for (let propertyName in b) {
-      keys.push(propertyName);
-    }
-    // how many elements are in the keys array?
-    expect(FILL_ME_IN).toBe(keys.length);
-    // what are the properties of the array?
-    expect([FILL_ME_IN, FILL_ME_IN]).toEqual(keys);
-
-    // hasOwnProperty returns true if the parameter is a property directly on the object,
-    // but not if it is a property accessible via the prototype chain.
-    let ownKeys = [];
-    for(let propertyName in b) {
-      if (b.hasOwnProperty(propertyName)) {
-        ownKeys.push(propertyName);
-      }
+    function A() {
+        this.aprop = "A";
     }
 
-    // how many elements are in the ownKeys array?
-    expect(FILL_ME_IN).toBe(ownKeys.length);
-    // what are the own properties of the array?
-    expect([FILL_ME_IN]).toEqual(ownKeys);
-  });
+    function B() {
+        this.bprop = "B";
+    }
 
-  it("constructor property", function () {
-    let a = new A();
-    let b = new B();
-    // "what is the type of a's constructor?"
-    expect(FILL_ME_IN).toBe(typeof(a.constructor));
-    // "what is the name of a's constructor?"
-    expect(FILL_ME_IN).toBe(a.constructor.name);
-    // "what is the name of b's constructor?"
-    expect(FILL_ME_IN).toBe(b.constructor.name);
-  });
+    // Наследование: прототип B становится экземпляром A
+    B.prototype = new A();
+    B.prototype.constructor = B; // Исправляем свойство constructor
+
+    it("hasOwnProperty", function() {
+        let b = new B();
+
+        let keys = [];
+        for (let propertyName in b) {
+            keys.push(propertyName);
+        }
+
+        // Количество свойств: 'bprop', 'aprop' и 'constructor'
+        expect(3).toBe(keys.length);
+        expect(["bprop", "aprop", "constructor"]).toEqual(keys);
+
+        // Проверка собственных свойств объекта b
+        let ownKeys = [];
+        for (let propertyName in b) {
+            if (b.hasOwnProperty(propertyName)) {
+                ownKeys.push(propertyName);
+            }
+        }
+
+        // Только 'bprop' является собственным свойством
+        expect(1).toBe(ownKeys.length);
+        expect(["bprop"]).toEqual(ownKeys);
+    });
+
+    it("constructor property", function() {
+        let a = new A();
+        let b = new B();
+
+        // Конструктор объекта a — это функция A
+        expect("function").toBe(typeof(a.constructor));
+        expect("A").toBe(a.constructor.name);
+
+        // Конструктор объекта b теперь правильно указывает на функцию B
+        expect("B").toBe(b.constructor.name);
+    });
 });

@@ -1,63 +1,79 @@
 describe("About Mutability (about_mutability.js)", function() {
-  it("should expect object properties to be public and mutable", function () {
-    let aPerson = { firstname: "John", lastname: "Smith" };
-    aPerson.firstname = "Alan";
 
-    expect(aPerson.firstname).toBe(FILL_ME_IN);
-  });
+    it("should expect object properties to be public and mutable", function() {
+        let aPerson = { firstname: "John", lastname: "Smith" };
+        aPerson.firstname = "Alan";
 
-  it("should understand that constructed properties are public and mutable", function () {
-    function Person(firstname, lastname){
-      this.firstname = firstname;
-      this.lastname = lastname;
-    }
-    let aPerson = new Person("John", "Smith");
-    aPerson.firstname = "Alan";
+        // Свойство firstname изменено на "Alan"
+        expect(aPerson.firstname).toBe("Alan");
+    });
 
-    expect(aPerson.firstname).toBe(FILL_ME_IN);
-  });
-  
-  it("should expect prototype properties to be public and mutable", function () {
-    function Person(firstname, lastname){
-      this.firstname = firstname;
-      this.lastname = lastname;
-    }
-    Person.prototype.getFullName = function () {
-      return this.firstname + " " + this.lastname;
-    };
-  
-    let aPerson = new Person("John", "Smith");
-    expect(aPerson.getFullName()).toBe(FILL_ME_IN);
-  
-    aPerson.getFullName = function () {
-      return this.lastname + ", " + this.firstname;
-    };
-  
-    expect(aPerson.getFullName()).toBe(FILL_ME_IN);
-  });
-  
-  it("should know that variables inside a constructor and constructor args are private", function () {
-    function Person(firstname, lastname){
-      let fullName = firstname + " " + lastname;
-  
-      this.getFirstName = function () { return firstname; };
-      this.getLastName = function () { return lastname; };
-      this.getFullName = function () { return fullName; };
-    }
-    let aPerson = new Person("John", "Smith");
+    it("should understand that constructed properties are public and mutable", function() {
+        function Person(firstname, lastname) {
+            this.firstname = firstname;
+            this.lastname = lastname;
+        }
+        let aPerson = new Person("John", "Smith");
+        aPerson.firstname = "Alan";
 
-    aPerson.firstname = "Penny";
-    aPerson.lastname = "Andrews";
-    aPerson.fullName = "Penny Andrews";
-  
-    expect(aPerson.getFirstName()).toBe(FILL_ME_IN);
-    expect(aPerson.getLastName()).toBe(FILL_ME_IN);
-    expect(aPerson.getFullName()).toBe(FILL_ME_IN);
+        // Свойство firstname изменено на "Alan"
+        expect(aPerson.firstname).toBe("Alan");
+    });
 
-    aPerson.getFullName = function () {
-      return aPerson.lastname + ", " + aPerson.firstname;
-    };
+    it("should expect prototype properties to be public and mutable", function() {
+        function Person(firstname, lastname) {
+            this.firstname = firstname;
+            this.lastname = lastname;
+        }
 
-    expect(aPerson.getFullName()).toBe(FILL_ME_IN);
-  });
+        Person.prototype.getFullName = function() {
+            return this.firstname + " " + this.lastname;
+        };
+
+        let aPerson = new Person("John", "Smith");
+
+        // Исходный метод getFullName возвращает "John Smith"
+        expect(aPerson.getFullName()).toBe("John Smith");
+
+        // Переопределяем метод getFullName
+        aPerson.getFullName = function() {
+            return this.lastname + ", " + this.firstname;
+        };
+
+        // Новый метод возвращает "Smith, John"
+        expect(aPerson.getFullName()).toBe("Smith, John");
+    });
+
+    it("should know that variables inside a constructor and constructor args are private", function() {
+        function Person(firstname, lastname) {
+            let fullName = firstname + " " + lastname;
+
+            this.getFirstName = function() { return firstname; };
+            this.getLastName = function() { return lastname; };
+            this.getFullName = function() { return fullName; };
+        }
+
+        let aPerson = new Person("John", "Smith");
+
+        // Попытка изменить внешние свойства не влияет на приватные переменные конструктора
+        aPerson.firstname = "Penny";
+        aPerson.lastname = "Andrews";
+        aPerson.fullName = "Penny Andrews";
+
+        // Приватная переменная firstname остаётся "John"
+        expect(aPerson.getFirstName()).toBe("John");
+        // Приватная переменная lastname остаётся "Smith"
+        expect(aPerson.getLastName()).toBe("Smith");
+        // Приватная переменная fullName остаётся "John Smith"
+        expect(aPerson.getFullName()).toBe("John Smith");
+
+        // Переопределяем метод getFullName
+        aPerson.getFullName = function() {
+            return aPerson.lastname + ", " + aPerson.firstname;
+        };
+
+        // Новый метод возвращает "Andrews, Penny"
+        expect(aPerson.getFullName()).toBe("Andrews, Penny");
+    });
+
 });
