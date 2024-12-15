@@ -1,47 +1,47 @@
 describe("About this (about_this.js)", function() {
-  it("'this' inside a method", function () {
-    let person = {
-      name: 'bob',
-      intro: function () {
-        return "Hello, my name is " + this.FILL_ME_IN;
-      }
-    }
 
-    // If an object has a method can you access properties inside it?
-    expect(person.intro()).toBe("Hello, my name is bob");
-  });
+    it("'this' inside a method", function() {
+        let person = {
+            name: 'bob',
+            intro: function() {
+                return "Hello, my name is " + this.name; // Accessing the 'name' property of the current object
+            }
+        }
 
-  it("'this' on unattached function", function () {
-    let person = {
-      globalName: 'bob',
-      intro: function () {
-        return "Hello, my name is " + this.globalName;
-      }
-    }
+        // If an object has a method, you can access properties inside it using 'this'.
+        expect(person.intro()).toBe("Hello, my name is bob");
+    });
 
-    let alias = person.intro;
+    it("'this' on unattached function", function() {
+        let person = {
+            globalName: 'bob',
+            intro: function() {
+                return "Hello, my name is " + this.globalName;
+            }
+        }
 
-    // if the function is not called as an object property 'this' is the global context 
-    // (window in a browser). This is an example. Please do not do this in practise.
-    window.FILL_ME_IN = 'Peter';
+        let alias = person.intro;
 
-    // What does 'this' refer to when it is not part of an object?
-    expect(alias()).toBe("Hello, my name is Peter");
-  });
+        // If the function is not called as an object property, 'this' refers to the global context (window).
+        window.globalName = 'Peter'; // Setting a global variable
 
-  it("'this' set explicitly", function () {
-    let person = {
-      name: 'bob',
-      intro: function () {
-        return "Hello, my name is " + this.name;
-      }
-    }
+        // In this case, 'this' refers to the global context, so 'globalName' is taken from the global scope.
+        expect(alias()).toBe("Hello, my name is Peter");
+    });
 
-    // calling a function with 'call' lets us assign 'this' explicitly
-    let message = person.intro.call({FILL_ME_IN: "Frank"});
+    it("'this' set explicitly", function() {
+        let person = {
+            name: 'bob',
+            intro: function() {
+                return "Hello, my name is " + this.name;
+            }
+        }
 
-    // What does 'this' refer to when you use the 'call()' method?
-    expect(message).toBe("Hello, my name is Frank");
-  });
+        // Calling a function with 'call' lets us assign 'this' explicitly.
+        let message = person.intro.call({ name: "Frank" }); // Setting 'this' to a new object with 'name' as 'Frank'
+
+        // 'this' now refers to the object passed to 'call', so 'name' is "Frank".
+        expect(message).toBe("Hello, my name is Frank");
+    });
+
 });
-
